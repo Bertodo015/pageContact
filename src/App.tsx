@@ -4,7 +4,7 @@ import { routes } from "./routes/router";
 const App = () => {
   const elements = useRoutes(routes);
 
-  return <>{elements}</>
+  return <>{elements}</> 
 };
 
 export default App;
