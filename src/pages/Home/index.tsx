@@ -1,4 +1,6 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { useMask } from "@react-input/mask";
+import EmailValidator from "email-validator";
 
 import styles from "./styles.module.css";
 import Header from "../../components/Header";
@@ -38,6 +40,28 @@ const Home = () => {
 
     };
 
+    const phoneRef = useMask({
+        mask: "(__) _____-____",
+        replacement: {_: /\d/},
+    });
+
+    //função para a validação
+    const areInputsInvalid = () => {
+        if(name.length === 0) {
+            return true;
+        }
+        
+        if(!EmailValidator.validate(email)) {
+            return true;
+        }
+
+        if (phone.match(/^\(\d{2}\)\s\d{5}-\d{4}$/) === null) {
+            return true;
+        }
+
+        return false;
+    };
+
     //o "chuchu" pode ser qualquer coisa no TS
     return (
         <div>
@@ -60,6 +84,9 @@ const Home = () => {
 
             <label htmlFor="phone">Telefone*:</label>
             <input 
+                /*Mascara @react-input/mask*/
+                ref={phoneRef}
+                placeholder="(__) _____-____"
                 type="tel" 
                 name="phone" 
                 value={phone}
@@ -98,7 +125,7 @@ const Home = () => {
                 onChange={(chuchu) => setBirthday(chuchu.target.value)}
             />
 
-            <input type="submit" value="Salvar" />
+            <input type="submit" value="Salvar" disabled={areInputsInvalid()} />
             </form>
 
             {contacts.length > 0 && (
