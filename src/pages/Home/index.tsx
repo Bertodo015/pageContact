@@ -37,8 +37,11 @@ const Home = () => {
         setPhone("");
         setEmail("");
         setBirthday("");
+        setAddress("");
 
     };
+
+    
 
     const phoneRef = useMask({
         mask: "(__) _____-____",
