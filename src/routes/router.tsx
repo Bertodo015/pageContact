@@ -3,6 +3,7 @@ import Home from "../pages/Home";
 import Contact from "../pages/Contact";
 import NotFound from "../pages/NotFound";
 import Login from "../pages/Login";
+import ProtectedRoute from "../components/Protected";
 
 export const routes: RouteObject[] = [
     {
@@ -11,16 +12,28 @@ export const routes: RouteObject[] = [
     },
     {
         path: "/home",
-        element: <Home />,
+        element: (
+            <ProtectedRoute>
+                <Home />
+            </ProtectedRoute>
+        ),
     },
     {
         path: "/contact",
-        element: <Contact />,
+        element: (
+            <ProtectedRoute>
+                <Contact />
+            </ProtectedRoute>
+        ),
     },
 
     //NotFoundPage sempre vai ser o último a cair
     {
         path: "*",
-        element: <NotFound />
-    }
+        element: (
+            <ProtectedRoute>
+                <NotFound />
+            </ProtectedRoute>
+        ),
+    },
 ];
