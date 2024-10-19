@@ -22,6 +22,10 @@ const Header = ({ title, backPage }: Props) => {
         )}
         <h1 className={styles.appTitle}>{title}</h1>
 
+        <Link to="/newcontact" className={styles.btnNewContact}>
+            <span>Novo contato</span>
+        </Link>
+
         <img src={photoURL} className={styles.thumb} alt={name} />
 
         <Link to="/logout">

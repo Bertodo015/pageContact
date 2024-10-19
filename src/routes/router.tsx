@@ -5,7 +5,9 @@ import NotFound from "../pages/NotFound";
 import Login from "../pages/Login";
 import ProtectedRoute from "../components/Protected";
 import Logout from "../pages/Logout";
+import NewContact from "../pages/NewContact";
 
+//Estudar o enumerator
 export const routes: RouteObject[] = [
     {
         path: "/",
@@ -16,6 +18,15 @@ export const routes: RouteObject[] = [
         element: (
             <ProtectedRoute>
                 <Home />
+            </ProtectedRoute>
+        ),
+    },
+
+    {
+        path: "/newContact",
+        element: (
+            <ProtectedRoute>
+                <NewContact />
             </ProtectedRoute>
         ),
     },
