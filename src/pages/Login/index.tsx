@@ -36,7 +36,9 @@ const Login = () => {
         signInWithPopup(auth, provider)
             .then(async (result) => {
                 const credential = GoogleAuthProvider.credentialFromResult(result);
-                if(credential && auth.currentUser) {
+                if(credential && auth.currentUser
+                    
+                ) {
                     const { currentUser } = auth;
                     const token = await currentUser.getIdTokenResult();
                     const { authTime, expirationTime }  =token;
