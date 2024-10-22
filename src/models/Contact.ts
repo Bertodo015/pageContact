@@ -1,3 +1,10 @@
+import {
+    DocumentData,
+    FirestoreDataConverter,
+    QueryDocumentSnapshot,
+    SnapshotOptions,
+} from "firebase/firestore"
+
 export class Contact {
     //inicia como uma string vazia para tirar o erro
     name: string = "";
@@ -5,13 +12,32 @@ export class Contact {
     email: string = "";
     address?: string;
     birthday?: Date;
+    ownerEmail: string = "";
 
-    constructor(name: string, phone: string, email: string) {
+    constructor(obj: Partial<Contact>) {
         /*
         this.name = name;
         this.phone = phone;
         this.email = email;
         */
-       Object.assign(this, { name, phone, email});
+       Object.assign(this, obj);
     }
 }
+
+export const contactConverter: FirestoreDataConverter<Contact, DocumentData> = {
+    toFirestore: (contact: Contact): DocumentData => {
+      const cleanContact = Object.entries(contact)
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        .filter(([_, value]) => value !== undefined)
+        .reduce((acc, [key, value]) => ({ ...acc, [key]: value }), {});
+      return cleanContact;
+    },
+  
+    fromFirestore: (
+      snapshot: QueryDocumentSnapshot,
+      options: SnapshotOptions
+    ) => {
+      const data = snapshot.data(options);
+      return new Contact(data);
+    },
+  };

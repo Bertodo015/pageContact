@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useMask } from "@react-input/mask";
 import EmailValidator from "email-validator";
 
 import styles from "./styles.module.css";
 import Header from "../../components/Header";
 import { Contact } from "../../models/Contact";
-import ContactCard from "../../components/ContactCard";
+import { UserContext } from "../../Context/UserContext";
+import { ContactService } from "../../services/ContactService";
 
 const NewContact = () => {
     /** 
@@ -21,16 +22,23 @@ const NewContact = () => {
     const [address, setAddress] = useState("");
     const [birthday, setBirthday] = useState("");
     //Utiliza um generic para tipar o array
-    const [contacts, setContacts] = useState<Contact[]>([]);
+    //const [contacts, setContacts] = useState<Contact[]>([]);
 
-    const saveContact = (e: React.FormEvent<HTMLFormElement>) => {
+    const ownerEmail = useContext(UserContext).email;
+
+    const service = new ContactService();
+
+    const saveContact = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const contact = new Contact(name, phone, email);
+        const contact = new Contact({ name, phone, email, ownerEmail });
         contact.address = address || undefined;
         contact.birthday = birthday ? new Date(birthday) : undefined;   //operador ternário
+
+        await service.save(contact);
+
         //Utilizando o spred operator (operador de espalhamento)
-        setContacts([contact, ...contacts])
+        //setContacts([contact, ...contacts])
 
         //para esvaziar os valores dos campos
         setName("");
@@ -130,14 +138,6 @@ const NewContact = () => {
 
             <input type="submit" value="Salvar" disabled={areInputsInvalid()} />
             </form>
-
-            {contacts.length > 0 && (
-                <div className={styles.contacts}>
-                    {contacts.map((chuchu, index) => (
-                        <ContactCard key={index} contact={chuchu} />
-                    ))}
-                </div>
-            )}
         </div>
     )
 };
