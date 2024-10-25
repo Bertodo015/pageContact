@@ -1,49 +1,48 @@
 .header {
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    background-image: linear-gradient(to right, #B4E7CE, #59A96A);
-    /*background-image: linear-gradient(to right, #636940, #474A2C);*/
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  background-image: linear-gradient(to right, #1e293b, #0f172a);
 }
 
 .backButton {
-    width: 35px;
-    filter: invert(1);
-    margin-right: 10px;
+  width: 24px;
+  filter: invert(1);
+  margin-right: 10px;
 }
 
 .backButton img {
-    width: 100%;
+  width: 100%;
 }
 
 .appTitle {
-    font-family: "Bold";
-    font-size: 1.6rem;
+  font-family: "bold";
+  font-size: 1.5rem;
 }
 
 .btnNewContact {
-    background-color: #f87171;
-    padding: 5px 10px;
-    border-radius: 7px;
-    text-align: center;
-    margin-left: auto;
-    text-decoration: none;
-    color: #fff;
+  background-color: #f87171;
+  padding: 5px 10px;
+  border-radius: 5px;
+  text-align: center;
+  margin-left: auto;
+  text-decoration: none;
+  color: #fff;
 }
 
 .btnNewContact span {
-    font-family: "bold";
-    font-size: 16px;
+  font-family: "bold";
+  font-size: 16px;
 }
 
 .thumb {
-    width: 36px;
-    border-radius: 50%;
-    margin: 0 20px;
+  width: 36px;
+  border-radius: 50%;
+  margin: 0 20px;
 }
 
 .logout {
-    width: 28px;
-    filter: invert(1);
-    cursor: pointer;
+  width: 24px;
+  filter: invert(1);
+  cursor: pointer;
 }

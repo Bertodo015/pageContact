@@ -2,44 +2,43 @@ import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 
-import styles from "./style.module.css";
-import { UserContext } from "../../Context/UserContext";
+import styles from "./styles.module.css";
+import { UserContext } from "../../context/UserContext";
 import { auth } from "../../config/firebase";
-import { Vortex } from "react-loader-spinner";
+import { Bars } from "react-loader-spinner";
 
 const Logout = () => {
-    const { setExp, setAuthTime } = useContext(UserContext);
-    const navigate = useNavigate();
+  const { setExp, setAuthTime } = useContext(UserContext);
+  const navigate = useNavigate();
 
-    //useEffect(() => {}, []);
-    useEffect(() => {
-        signOut(auth)
-            .then(() => {
-                setExp(0);
-                setAuthTime(0);
-                navigate("/");
-            })
-            .catch((erro) => {
-                const { code, message } = erro;
-                console.log(code);
-                console.log(message);
-            })
-    }, []);
+  useEffect(() => {
+    signOut(auth)
+      .then(() => {
+        setExp(0);
+        setAuthTime(0);
+        navigate("/");
+      })
+      .catch((err) => {
+        const { code, message } = err;
+        console.log(code);
+        console.log(message);
+      });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    //https://mhnpd.github.io/react-loader-spinner/docs/components/rotating-triangles
-    return (
-        <div className={styles.container}>
-            <Vortex
-                visible={true}
-                height="80"
-                width="80"
-                ariaLabel="vortex-loading"
-                wrapperStyle={{}}
-                wrapperClass="vortex-wrapper"
-                colors={['red', 'green', 'blue', 'yellow', 'orange', 'purple']}
-            />
-        </div>
-    );
+  return (
+    <div className={styles.container}>
+      <Bars
+        height="80"
+        width="80"
+        color="#fff"
+        ariaLabel="bars-loading"
+        wrapperStyle={{}}
+        wrapperClass=""
+        visible={true}
+      />
+    </div>
+  );
 };
 
 export default Logout;

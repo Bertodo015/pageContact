@@ -3,58 +3,53 @@ import Home from "../pages/Home";
 import Contact from "../pages/Contact";
 import NotFound from "../pages/NotFound";
 import Login from "../pages/Login";
-import ProtectedRoute from "../components/Protected";
+import ProtectedRoute from "../components/ProtectedRoute";
 import Logout from "../pages/Logout";
 import NewContact from "../pages/NewContact";
 
-//Estudar o enumerator
 export const routes: RouteObject[] = [
-    {
-        path: "/",
-        element: <Login />,
-    },
-    {
-        path: "/home",
-        element: (
-            <ProtectedRoute>
-                <Home />
-            </ProtectedRoute>
-        ),
-    },
-
-    {
-        path: "/newContact",
-        element: (
-            <ProtectedRoute>
-                <NewContact />
-            </ProtectedRoute>
-        ),
-    },
-    {
-        path: "/contact",
-        element: (
-            <ProtectedRoute>
-                <Contact />
-            </ProtectedRoute>
-        ),
-    },
-
-    {
-        path: "/logout",
-        element: (
-            <ProtectedRoute>
-                <Logout />
-            </ProtectedRoute>
-        ),
-    },
-
-    //NotFoundPage sempre vai ser o último a cair
-    {
-        path: "*",
-        element: (
-            <ProtectedRoute>
-                <NotFound />
-            </ProtectedRoute>
-        ),
-    },
+  {
+    path: "/",
+    element: <Login />,
+  },
+  {
+    path: "/home",
+    element: (
+      <ProtectedRoute>
+        <Home />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/newcontact",
+    element: (
+      <ProtectedRoute>
+        <NewContact />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/contact",
+    element: (
+      <ProtectedRoute>
+        <Contact />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "/logout",
+    element: (
+      <ProtectedRoute>
+        <Logout />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: "*",
+    element: (
+      <ProtectedRoute>
+        <NotFound />
+      </ProtectedRoute>
+    ),
+  },
 ];

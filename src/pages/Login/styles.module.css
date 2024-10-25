@@ -1,36 +1,36 @@
 .loginPanel {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100svh;
-    gap: 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100svh;
+  gap: 32px;
 }
 
-.tittle {
-    font-family: "bold";
+.title {
+  font-family: "bold";
 }
 
 .btnLogin {
-    background-color: #0EB1D2;
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    border-radius: 10px;
-    gap: 16px;
-    cursor: pointer;
+  background-color: #fef2f2;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  gap: 16px;
+  cursor: pointer;
 }
 
 .btnLogin:focus {
-    outline: 5px solid #94a3b8;
+  outline: 5px solid #94a3b8;
 }
 
 .btnLogin img {
-    width: 28px;
+  width: 28px;
 }
 
 .btnLogin span {
-    color: #000;
-    font-family: "bold";
-    font-size: 25px;
+  color: #000;
+  font-family: "bold";
+  font-size: 22px;
 }
