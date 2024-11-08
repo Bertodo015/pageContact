@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 
+import styles from "./styles.module.css";
 import Header from "../../components/Header";
 import { Contact } from "../../models/Contact";
 import { ContactService } from "../../services/ContactService";
@@ -20,33 +21,36 @@ const Home = () => {
       setContacts(results);
       isLoading(false);
     })();
-  },[]);
+  }, []);
 
   return (
     <>
       <Header title="Início" />
 
-      <Hourglass
-        height="80"
-        width="80"
-        ariaLabel="hourglass-loading"
-        wrapperStyle={{}}
-        wrapperClass=""
-        colors={['#306cce', '#72a1ed']}
-        visible={loading}
-      />
+      <div className={styles.container}>
 
-      {!loading && contacts.length > 0 && (
-        <>
-          <h1>Seus contatos</h1>
+        <Hourglass
+          height="80"
+          width="80"
+          ariaLabel="hourglass-loading"
+          wrapperStyle={{}}
+          wrapperClass=""
+          colors={['#306cce', '#72a1ed']}
+          visible={loading}
+        />
 
-          {contacts.map((c) => (
-            <ContactCard key={c.email} contact={c} />
-          ))}
-        </>
-      )}
+        {!loading && contacts.length > 0 && (
+          <>
+            <h1>Seus contatos</h1>
 
-      {!loading && contacts.length === 0 && <p>Nenhum contato cadastrado</p>}
+            {contacts.map((c) => (
+              <ContactCard key={c.email} contact={c} />
+            ))}
+          </>
+        )}
+
+        {!loading && contacts.length === 0 && <p>Nenhum contato cadastrado</p>}
+      </div>
     </>
   );
 };

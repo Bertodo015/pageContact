@@ -34,7 +34,7 @@ export class ContactService {
       ref, 
       where("ownerEmail", "==", ownerEmail), 
       orderBy("name")
-    );
+    ).withConverter(contactConverter);
 
     const snapshot = await getDocs(q);
 
