@@ -1,22 +1,21 @@
-import { Contact } from "../../models/Contact";
 import { Link } from "react-router-dom";
 
 import styles from "./styles.module.css";
+import { Contact } from "../../models/Contact";
 import noimage from "../../assets/img/noimage.png";
 import pencil from "../../assets/img/pencil.png";
 import trash from "../../assets/img/trash.png";
-import { useState } from "react";
 
 type Props = {
   contact: Contact;
-  openModal: () => void;
+  shouldOpenConfirmationDialog: (contact: Contact) => void;
 };
 
-const ContactCard = ({ contact, openModal }: Props) => {
+const ContactCard = ({ contact, shouldOpenConfirmationDialog }: Props) => {
   return (
     <div className={styles.contactCard}>
       <div className={styles.thumb}>
-        <img src={noimage} alt={contact.name} />
+        <img src={contact.thumbURL || noimage} alt={contact.name} />
       </div>
 
       <div className={styles.info}>
@@ -53,17 +52,17 @@ const ContactCard = ({ contact, openModal }: Props) => {
       </div>
 
       <div className={styles.actions}>
-        <Link 
-          className={`${styles.actionButton} ${styles.editButton}`} 
+        <Link
+          className={`${styles.actionButton} ${styles.editButton}`}
           to="/newcontact"
           state={{ contact }}
         >
           <img src={pencil} alt="Editar dados do contato" />
         </Link>
 
-        <button 
+        <button
           className={`${styles.actionButton} ${styles.deleteButton}`}
-          onClick={() => openModal()}
+          onClick={() => shouldOpenConfirmationDialog(contact)}
         >
           <img src={trash} alt="Remover contato" />
         </button>

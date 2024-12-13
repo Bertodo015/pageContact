@@ -36,7 +36,7 @@
 }
 
 .btnNewContact img {
-    display: none;
+  display: none;
 }
 
 .thumb {
@@ -51,22 +51,21 @@
   cursor: pointer;
 }
 
-
 @media screen and (max-width: 600px) {
-    .header {
-        padding: 10px;
-    }
+  .header {
+    padding: 10px;
+  }
 
-    .btnNewContact {
-        padding: 7px;
-    }
+  .btnNewContact {
+    padding: 7px;
+  }
 
-    .btnNewContact span {
-        display: none;
-    }
+  .btnNewContact span {
+    display: none;
+  }
 
-    .btnNewContact img {
-        display: inline;
-        width: 24px;
-    }
+  .btnNewContact img {
+    display: inline;
+    width: 24px;
+  }
 }

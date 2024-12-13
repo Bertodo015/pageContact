@@ -6,36 +6,49 @@ import { Contact } from "../../models/Contact";
 import { ContactService } from "../../services/ContactService";
 import { UserContext } from "../../context/UserContext";
 import ContactCard from "../../components/ContactCard";
-import { Hourglass } from "react-loader-spinner";
+import { Circles } from "react-loader-spinner";
+import ConfirmationDialog from "../../components/ConfirmationDialog";
 
 const Home = () => {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [loading, isLoading] = useState(false);
+  const [openConfirmationDialog, shouldOpenConfirmationDialog] =
+    useState(false);
+  const [selectedContact, setSelectedContact] = useState<Contact | undefined>(
+    undefined
+  );
 
   const { email } = useContext(UserContext);
 
   useEffect(() => {
     (async () => {
-      const service = new ContactService();
-      const results = await service.findAllByOwner(email);
-      setContacts(results);
-      isLoading(false);
+      if (!openConfirmationDialog) {
+        isLoading(true);
+        const service = new ContactService();
+        const results = await service.findAllByOwner(email);
+        setContacts(results);
+        isLoading(false);
+      }
     })();
-  }, []);
+  }, [openConfirmationDialog]);
+
+  const openDialog = (contact: Contact) => {
+    setSelectedContact(contact);
+    shouldOpenConfirmationDialog(true);
+  };
 
   return (
     <>
       <Header title="Início" />
 
       <div className={styles.container}>
-
-        <Hourglass
+        <Circles
           height="80"
           width="80"
-          ariaLabel="hourglass-loading"
+          color="#fff"
+          ariaLabel="circles-loading"
           wrapperStyle={{}}
           wrapperClass=""
-          colors={['#306cce', '#72a1ed']}
           visible={loading}
         />
 
@@ -44,12 +57,24 @@ const Home = () => {
             <h1>Seus contatos</h1>
 
             {contacts.map((c) => (
-              <ContactCard key={c.email} contact={c} />
+              <ContactCard
+                key={c.email}
+                contact={c}
+                shouldOpenConfirmationDialog={openDialog}
+              />
             ))}
           </>
         )}
 
         {!loading && contacts.length === 0 && <p>Nenhum contato cadastrado</p>}
+
+        {selectedContact && (
+          <ConfirmationDialog
+            open={openConfirmationDialog}
+            contact={selectedContact}
+            onClose={() => shouldOpenConfirmationDialog(false)}
+          />
+        )}
       </div>
     </>
   );

@@ -39,8 +39,8 @@ const NewContact = () => {
   const [address, setAddress] = useState(
     contact?.address ? contact.address : ""
   );
-  const [birthday, setBirthday] = useState(contact?.birthday ? moment(
-    contact.birthday).format("YYYY-MM-DD") : ""
+  const [birthday, setBirthday] = useState(
+    contact?.birthday ? moment(contact.birthday).format("YYYY-MM-DD") : ""
   );
   const [responseSeverity, setResponseSeverity] = useState(Severity.SUCCESS);
   const [showResponseMessage, shouldShowResponseMessage] = useState(false);
@@ -49,40 +49,42 @@ const NewContact = () => {
 
   const service = new ContactService();
 
-  const saveToDB = async (isNewContact: boolean) => {
-    const contact = new Contact({ name, phone, email, ownerEmail });
-      contact.address = address || undefined;
-      contact.birthday = birthday ? new Date(birthday) : undefined;
+  const saveToDB = async () => {
+    const newContact = new Contact({ name, phone, email, ownerEmail });
+    newContact.address = address || undefined;
+    newContact.birthday = birthday ? new Date(birthday) : undefined;
 
-      try {
-        await service.save(contact);
-        setResponseSeverity(Severity.SUCCESS);
-      } catch (erro) {
-        console.log(erro);
-        setResponseSeverity(Severity.ERROR);
-      }
+    try {
+      await service.save(newContact);
+      setResponseSeverity(Severity.SUCCESS);
+    } catch (err) {
+      console.log(err);
+      setResponseSeverity(Severity.ERROR);
+    }
 
-      //Se não for edição, limpa o formulário
-      if(!contact) {
-        setName("");
-        setPhone("");
-        setEmail("");
-        setBirthday("");
-        setAddress("");
-
-      }
-  }
+    // Se não for edição, limpa o formulário
+    if (!contact) {
+      setName("");
+      setPhone("");
+      setEmail("");
+      setBirthday("");
+      setAddress("");
+    }
+  };
 
   const saveContact = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     shouldShowResponseMessage(false);
 
-    //Caso não seja edição
-    if(!contact) {
-      const existingContact = await service.findByOwnerEmailAndContactEmail(ownerEmail, email);
+    // Cao não seja edição:
+    if (!contact) {
+      const existingContact = await service.findByOwnerEmailAndContactEmail(
+        ownerEmail,
+        email
+      );
 
-      if(existingContact) {
+      if (existingContact) {
         setResponseSeverity(Severity.WARNING);
         shouldShowResponseMessage(true);
         return;
@@ -116,9 +118,9 @@ const NewContact = () => {
 
   return (
     <div>
-      <Header 
-        title={contact ? "Editar contato" : "Novo contato"} 
-        backPage="/home" 
+      <Header
+        title={contact ? "Editar contato" : "Novo contato"}
+        backPage="/home"
       />
 
       <form className={styles.contactForm} onSubmit={saveContact}>
@@ -179,17 +181,17 @@ const NewContact = () => {
       </form>
 
       {showResponseMessage && (
-        <Message 
-          severity={responseSeverity} 
+        <Message
+          severity={responseSeverity}
           message={(() => {
-            if(responseSeverity === Severity.SUCCESS){
+            if (responseSeverity === Severity.SUCCESS) {
               return "Contato salvo com sucesso!";
             } else if (responseSeverity === Severity.WARNING) {
               return "Já existe um contato com este e-mail.";
             }
 
             return "Ocorreu um erro ao tentar salvar o contato.";
-          })()} 
+          })()}
         />
       )}
     </div>

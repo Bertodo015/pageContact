@@ -1,4 +1,14 @@
-import { collection, doc, getDoc, getDocs, orderBy, query, setDoc, where } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDoc,
+  getDocs,
+  orderBy,
+  query,
+  setDoc,
+  where,
+} from "firebase/firestore";
 
 import { Contact, contactConverter } from "../models/Contact";
 import { store } from "../config/firebase";
@@ -16,7 +26,10 @@ export class ContactService {
     await setDoc(ref, contact);
   }
 
-  async findByOwnerEmailAndContactEmail(ownerEmail: string, contactEmail: string) {
+  async findByOwnerEmailAndContactEmail(
+    ownerEmail: string,
+    contactEmail: string
+  ) {
     const id = this._generateId(ownerEmail, contactEmail);
     const ref = doc(
       store,
@@ -31,8 +44,8 @@ export class ContactService {
   async findAllByOwner(ownerEmail: string) {
     const ref = collection(store, FirebaseContainer.CONTACTS_COLLECTION_NAME);
     const q = query(
-      ref, 
-      where("ownerEmail", "==", ownerEmail), 
+      ref,
+      where("ownerEmail", "==", ownerEmail),
       orderBy("name")
     ).withConverter(contactConverter);
 
@@ -42,6 +55,17 @@ export class ContactService {
     snapshot.forEach((doc) => contacts.push(new Contact(doc.data())));
 
     return contacts;
+  }
+
+  async delete(contact: Contact) {
+    const id = this._generateId(contact.ownerEmail, contact.email);
+    const ref = doc(
+      store,
+      FirebaseContainer.CONTACTS_COLLECTION_NAME,
+      id
+    ).withConverter(contactConverter);
+
+    await deleteDoc(ref);
   }
 
   private _generateId(ownerEmail: string, contactEmail: string) {
